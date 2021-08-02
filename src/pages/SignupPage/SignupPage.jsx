@@ -6,6 +6,16 @@ import { useHistory } from 'react-router-dom';
 
 
 export default function SignUpPage(props){
+    const [error, setError] = useState('');
+    const [selectedFile, setSelectedFile] = userState('');
+    const [state, setState] = useState({
+        username: '',
+        email: '',
+        password: '',
+        passwordConf: '',
+        bio: ''
+    });
+    const history = useHistory();
 
 
 

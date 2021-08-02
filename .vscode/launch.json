@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "name": "ttback",
+        "program": "${workspaceFolder}/server.js",
+        "request": "launch",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "type": "pwa-node"
+    },
+    {
+        "command": "npm start",
+        "name": "ttfront",
+        "request": "launch",
+        "type": "node-terminal"
+    }
+  ]
+}
