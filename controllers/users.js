@@ -8,7 +8,8 @@ const s3 = new S3(); // initialize the construcotr
 
 module.exports = {
   signup,
-  login
+  login,
+  profile
 };
 
 function signup(req, res) {
@@ -62,6 +63,18 @@ async function login(req, res) {
   }
 }
 
+async function profile(req, res){
+  console.log(req.params);
+  try{
+    const user = await User.findOne({username: req.params.username});
+    console.log(user);
+    if(!user) res.status(404).json({message: 'Please Login'});
+    res.status(200).json({user: user});
+  } catch(err){
+    console.log(err);
+    res.json({err});
+  }
+}
 
 /*----- Helper Functions -----*/
 
