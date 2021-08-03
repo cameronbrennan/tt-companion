@@ -25,8 +25,11 @@ export default function UserBio({ user }) {
               {user.firstname} {user.lastname}
             </h3>
           </Segment>
+          <Segment vertical>
+            <h3>{user.email}</h3>
+          </Segment>
           <Segment>
-            <span> Bio: {user.bio}</span>
+            <span><h3>Bio: {user.bio}</h3></span>
           </Segment>
         </Grid.Column>
       </Grid.Row>

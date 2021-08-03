@@ -12,7 +12,15 @@ export default function Home({ handleLogout, user }) {
       </Grid.Row>
       <Grid.Row>
         <Grid.Column style={{ maxWidth: 450 }}>
-          <h2>This is where the page content will go!</h2>
+          <h2>Welcome! To the Table Top Companion</h2>
+          <p>
+            Table Top Companion is a site designed to let tabletop Role Playing
+            Game players build, save, and share their player character concepts
+            and favorites!
+            <br />
+            <br />
+            Sign Up or Login and start building your next adventurer!
+          </p>
         </Grid.Column>
       </Grid.Row>
     </Grid>

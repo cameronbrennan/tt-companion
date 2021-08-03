@@ -37,7 +37,7 @@ export default function UserProfile({ user, handleLogout}) {
   if (error) {
     return (
       <>
-        <PageHeader />
+        <PageHeader user={user} />
         <h1>{error}</h1>
       </>
     );
