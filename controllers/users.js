@@ -69,7 +69,7 @@ async function profile(req, res){
     const user = await User.findOne({username: req.params.username});
     console.log(user);
     if(!user){
-      res.status(404).json({message: 'Please Login'});
+      res.status(403).json({message: 'Please Login'});
     } else {
     res.status(200).json({user: user});
     }

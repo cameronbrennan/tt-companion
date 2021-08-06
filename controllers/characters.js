@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function create(req, res) {
-  console.log(req.file)
+  console.log(req.file);
   try {
     const filePath = `${uuidv4()}/${req.file.originalname}`;
     const params = {
@@ -25,7 +25,7 @@ function create(req, res) {
         console.log(err);
         res.json({ data: err });
       }
-      console.log(data, ' this data')
+      console.log(data, " this data");
       const character = await Character.create({
         name: req.body.name,
         race: req.body.race.toLowerCase(),
@@ -41,7 +41,9 @@ function create(req, res) {
         photoUrl: data.Location,
       });
 
-      const populatedCharacter = await character.populate("user").execPopulate();
+      const populatedCharacter = await character
+        .populate("user")
+        .execPopulate();
       res.status(201).json({ character: populatedCharacter });
     });
   } catch (err) {
@@ -54,5 +56,9 @@ async function index(req, res) {
   try {
     const characters = await Character.find({}).populate("user").exec();
     res.status(200).json({ characters });
-  } catch (err) {}
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Unable to retrieve character list" + err.message });
+  }
 }

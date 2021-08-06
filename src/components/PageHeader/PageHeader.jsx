@@ -8,8 +8,8 @@ export default function PageHeader({user, handleLogout}){
         <Segment clearing>
             <Header as='h2' floated='right'>
                 <Link to="/"><Icon name='home'></Icon></Link>
-                <Link to="/">All Characters</Link>
-                <Link to="/">My Characters</Link>
+                <Link to="/characters"><Icon name='child' title='All Characters'></Icon></Link>
+                <Link to={`/${user.username}`}><Icon name='bug' title='My Characters'></Icon></Link>
                 <Link to='' onClick={handleLogout}>Logout</Link>
             </Header>
             <Header as='h2' floated='left'>

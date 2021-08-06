@@ -57,7 +57,7 @@ export default function AddCharForm({ user, handleLogout }) {
   }
 
   function handleAbilityNum(e) {
-    
+
     setState({
       ...state,
       
