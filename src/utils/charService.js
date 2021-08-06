@@ -5,7 +5,7 @@ const BASE_URL = '/api/characters';
 export function create(character){
     return fetch(BASE_URL, {
         method: 'POST',
-        body: post,
+        body: character,
         headers: {
             'Authorization': 'Bearer ' + tokenService.getToken()
         }
@@ -18,4 +18,12 @@ export function getAll() {
             'Authorization': 'Bearer ' + tokenService.getToken()
         }
     }).then(res => res.json());
+}
+
+
+
+
+export default {
+    create,
+    getAll
 }

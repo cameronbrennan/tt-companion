@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const s3 = new S3();
 
-const BUCKET_NAME = process.env.AWS_BUCKET;
+const BUCKET_NAME = process.env.BUCKET_NAME;
 
 module.exports = {
   create,
@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function create(req, res) {
-
+  console.log(req.file)
   try {
     const filePath = `${uuidv4()}/${req.file.originalname}`;
     const params = {
@@ -25,11 +25,11 @@ function create(req, res) {
         console.log(err);
         res.json({ data: err });
       }
-
+      console.log(data, ' this data')
       const character = await Character.create({
         name: req.body.name,
-        race: req.body.race,
-        class: req.body.class,
+        race: req.body.race.toLowerCase(),
+        class: req.body.class.toLowerCase(),
         strength: req.body.strength,
         dexterity: req.body.dexterity,
         constitution: req.body.constitution,
