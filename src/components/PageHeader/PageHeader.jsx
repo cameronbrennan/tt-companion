@@ -13,7 +13,7 @@ export default function PageHeader({ user, handleLogout }) {
           <Icon name="child" title="All Characters"></Icon>
         </Link>
         <Link to="/create">
-          <Icon name="edit icon" title="Create Character"></Icon>
+          <Icon name="edit" title="Create Character"></Icon>
         </Link>
         <Link to={`/${user.username}`}>
           <Icon name="bug" title="My Characters"></Icon>

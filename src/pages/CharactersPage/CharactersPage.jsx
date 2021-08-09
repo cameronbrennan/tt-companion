@@ -29,7 +29,7 @@ export default function CharactersPage({ user, handleLogout }) {
         style={{ height: "100vh" }}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: 450 }}>
+        <Grid.Column style={{ width: "80vw" }}>
           <Loader size="large" active>
             Loading...
           </Loader>
@@ -48,7 +48,11 @@ export default function CharactersPage({ user, handleLogout }) {
       <Grid.Row>
         <Grid.Column style={{ width: "80vw" }}>
           {characters.map((character) => {
-            return <Link to={`/characters/${character._id}`} key={character._id}>{character.name}</Link>;
+            return (
+              <Link to={`/characters/${character._id}`} key={character._id}>
+                {character.name}
+              </Link>
+            );
           })}
         </Grid.Column>
       </Grid.Row>

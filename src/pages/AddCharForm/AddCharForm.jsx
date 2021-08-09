@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import charService from "../../utils/charService";
+import raceService from "../../utils/raceService";
+import classService from "../../utils/classService";
 import { Button, Form, Grid, Segment } from "semantic-ui-react";
 import PageHeader from "../../components/PageHeader/PageHeader";
 
@@ -26,7 +28,7 @@ export default function AddCharForm({ user, handleLogout }) {
   const history = useHistory();
 
   const races = [
-    { key: "dragonborn", text: "Dragonborn", value: "dragonborn" },
+    { key: "dragonborn", text: "Dragonborn", value: "6110ceae73789937de0c5ff8" },
     { key: "dwarf", text: "Dwarf", value: "dwarf" },
     { key: "elf", text: "Elf", value: "elf" },
     { key: "gnome", text: "Gnome", value: "gnome" },
@@ -56,21 +58,11 @@ export default function AddCharForm({ user, handleLogout }) {
     setSelectedFile(e.target.files[0]);
   }
 
-  function handleAbilityNum(e) {
-
-    setState({
-      ...state,
-      
-    })
-  }
-
   function handleChange(e) {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.name);
-    console.log(e.target.value);
   }
 
   async function handleSubmit(e) {
@@ -90,8 +82,16 @@ export default function AddCharForm({ user, handleLogout }) {
     }
   }
 
+  async function getRaces() {
+
+  }
+
+  async function getClasses(){
+
+  }
+  // useEffect to populate Class and Race information for ability scores and proficiency options
   useEffect(() => {
-    
+    // 
   }, [])
 
   //   if (loading) {
@@ -101,7 +101,7 @@ export default function AddCharForm({ user, handleLogout }) {
   //         style={{ height: "100vh" }}
   //         verticalAlign="middle"
   //       >
-  //         <Grid.Column style={{ maxWidth: 450 }}>
+  //         <Grid.Column style={{ width: "100vw" }}>
   //           <Loader size="large" active>
   //             Loading...
   //           </Loader>
