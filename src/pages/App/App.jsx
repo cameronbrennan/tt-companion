@@ -8,6 +8,7 @@ import Home from "../Home/Home";
 import UserProfile from "../UserProfile/UserProfile";
 import AddCharForm from "../AddCharForm/AddCharForm";
 import CharactersPage from "../CharactersPage/CharactersPage";
+import CharacterProfile from "../CharacterProfile/CharacterProfile";
 
 function App() {
   const [user, setUser] = useState(userService.getUser()); // getUser decodes our JWT token, into a javascript object
@@ -41,8 +42,11 @@ function App() {
               <Route path="/create">
                 <AddCharForm user={user} handleLogout={handleLogout} />
               </Route>
-              <Route path="/characters">
-                <CharactersPage user={user} handleLogout={handleLogout}/>
+              <Route exact path="/characters">
+                <CharactersPage user={user} handleLogout={handleLogout} />
+              </Route>
+              <Route path="/characters/:id">
+                <CharacterProfile user={user} handleLogout={handleLogout} />
               </Route>
               <Route path="/:username">
                 <UserProfile user={user} handleLogout={handleLogout} />

@@ -1,10 +1,10 @@
-const classes = require('../models/classes');
+const charClass = require('../models/Class');
 
 module.exports ={
     getClass
 };
 
 async function getClass(req, res){
-    const json = await classes.findOne({index: 'wizard'})
+    const json = await charClass.findOne({index: 'wizard'})
     res.json(json)
 }

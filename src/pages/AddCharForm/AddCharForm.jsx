@@ -126,26 +126,6 @@ export default function AddCharForm({ user, handleLogout }) {
               onChange={handleChange}
               required
             />
-            {/* <Form.Field
-              label="Enter your Character's Race"
-              placeholder="Character Race"
-              className="form-control"
-              name="race"
-              control="input"
-              value={state.race}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              label="Enter your Character's Class"
-              placeholder="Character Class"
-              className="form-control"
-              name="class"
-              control="input"
-              value={state.class}
-              onChange={handleChange}
-              required
-            /> */}
             <div>
               <label for="race">Select Your Character's Race</label>
               <select name="race" value={state.race} onChange={handleChange}>

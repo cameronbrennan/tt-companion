@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import * as charService from "../../utils/charService";
 import { Grid, Loader } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-export default function CharactersPage({user, handleLogout}) {
+export default function CharactersPage({ user, handleLogout }) {
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,9 +46,9 @@ export default function CharactersPage({user, handleLogout}) {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column style={{ width: '80vw' }}>
+        <Grid.Column style={{ width: "80vw" }}>
           {characters.map((character) => {
-              return <div>{character.name}</div>
+            return <Link to={`/characters/${character._id}`} key={character._id}>{character.name}</Link>;
           })}
         </Grid.Column>
       </Grid.Row>
