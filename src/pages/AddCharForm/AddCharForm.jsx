@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import charService from "../../utils/charService";
 import { Button, Form, Grid, Segment } from "semantic-ui-react";
@@ -89,6 +89,10 @@ export default function AddCharForm({ user, handleLogout }) {
       setError(err.message);
     }
   }
+
+  useEffect(() => {
+    
+  }, [])
 
   //   if (loading) {
   //     return (
