@@ -11,17 +11,11 @@ export default function UserProfile({ user, handleLogout}) {
   const [error, setError] = useState("");
 
   const { username } = useParams();
-  // username is being destructed from the params route
-  // in app.js /:username
 
   async function getProfile() {
     try {
       const data = await userService.getProfile(username);
       console.log(data, " data");
-
-      // data is the response from the controller function /api/users/profile
-      // go to the controller function and look at what is returned
-      // posts and user are the properties on the data object
       setLoading(() => false);
       setProfileUser(() => data.user);
     } catch (err) {

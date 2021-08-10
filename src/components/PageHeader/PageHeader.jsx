@@ -10,13 +10,13 @@ export default function PageHeader({ user, handleLogout }) {
           <Icon name="home"></Icon>
         </Link>
         <Link to="/characters">
-          <Icon name="child" title="All Characters"></Icon>
+          <Icon name="users" title="All Characters"></Icon>
         </Link>
         <Link to="/create">
           <Icon name="edit" title="Create Character"></Icon>
         </Link>
         <Link to={`/${user.username}`}>
-          <Icon name="bug" title="My Characters"></Icon>
+          <Icon name="user circle" title="My Profile"></Icon>
         </Link>
         <Link to="" onClick={handleLogout}>
           <Icon name="sign in" title="Logout"></Icon>
@@ -30,7 +30,6 @@ export default function PageHeader({ user, handleLogout }) {
             }
             avatar
           ></Image>
-          <Icon name="address book outline"></Icon>
         </Link>
       </Header>
     </Segment>

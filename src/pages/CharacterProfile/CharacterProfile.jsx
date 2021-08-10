@@ -45,9 +45,9 @@ export default function CharacterProfile({ user, handleLogout }) {
         style={{ height: "100vh" }}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: 450 }}>
+        <Grid.Column style={{ width: '80vw' }}>
           <Loader size="large" active>
-            Loading
+            Loading...
           </Loader>
         </Grid.Column>
       </Grid>

@@ -3,13 +3,17 @@ import { useHistory } from "react-router-dom";
 import charService from "../../utils/charService";
 import raceService from "../../utils/raceService";
 import classService from "../../utils/classService";
-import { Button, Form, Grid, Segment } from "semantic-ui-react";
+import { Button, Form, Grid, Segment, Loader } from "semantic-ui-react";
 import PageHeader from "../../components/PageHeader/PageHeader";
 
-export default function AddCharForm({ user, handleLogout }) {
-  const [error, setError] = useState('')
+export default function CharacterCreate({ user, handleLogout }) {
+  // state management
+  const [error, setError] = useState("");
   const [char, setChar] = useState([]);
   const [selectedFile, setSelectedFile] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [classes, setClasses] = useState([]);
+  const [races, setRaces] = useState([]);
   const [state, setState] = useState({
     name: "Test",
     race: "",
@@ -24,38 +28,9 @@ export default function AddCharForm({ user, handleLogout }) {
     photoUrl: "",
   });
 
-  const [classes, setClasses] = useState([])
-  const [races, setRaces] = useState([])
-
   const history = useHistory();
 
-  // const races = [
-  //   { key: "dragonborn", text: "Dragonborn", value: "6110ceae73789937de0c5ff8" },
-  //   { key: "dwarf", text: "Dwarf", value: "dwarf" },
-  //   { key: "elf", text: "Elf", value: "elf" },
-  //   { key: "gnome", text: "Gnome", value: "gnome" },
-  //   { key: "half-elf", text: "Half-Elf", value: "half-elf" },
-  //   { key: "half-orc", text: "Half-Orc", value: "half-orc" },
-  //   { key: "halfling", text: "Halfling", value: "halfling" },
-  //   { key: "human", text: "Human", value: "human" },
-  //   { key: "tiefling", text: "Tiefling", value: "tiefling" },
-  // ];
-
-  // const classes = [
-  //   { key: "barbarian", text: "Barbarian", value: "barbarian" },
-  //   { key: "bard", text: "Bard", value: "bard" },
-  //   { key: "cleric", text: "Cleric", value: "cleric" },
-  //   { key: "druid", text: "Druid", value: "druid" },
-  //   { key: "fighter", text: "Fighter", value: "fighter" },
-  //   { key: "monk", text: "Monk", value: "monk" },
-  //   { key: "paladin", text: "Paladin", value: "paladin" },
-  //   { key: "ranger", text: "Ranger", value: "ranger" },
-  //   { key: "rogue", text: "Rogue", value: "rogue" },
-  //   { key: "sorcerer", text: "Sorcerer", value: "sorcerer" },
-  //   { key: "warlock", text: "Warlock", value: "warlock" },
-  //   { key: "wizard", text: "Wizard", value: "wizard" },
-  // ];
-
+  // functions
   function handleFileInput(e) {
     setSelectedFile(e.target.files[0]);
   }
@@ -85,43 +60,62 @@ export default function AddCharForm({ user, handleLogout }) {
   }
 
   async function getRaces() {
-    try{
+    try {
       const data = await raceService.getAll();
-      setRaces([...data.races])
-    } catch(err){
+      setRaces([...data.races]);
+    } catch (err) {
       setError(err.message);
+      setLoading(false);
+      console.log(error);
     }
   }
 
-  async function getClasses(){
-    try{
+  async function getClasses() {
+    try {
       const data = await classService.getAll();
-      setClasses([...data.classes])
-    } catch(err){
+      setClasses([...data.classes]);
+    } catch (err) {
       setError(err.message);
+      setLoading(false);
+      console.log(error);
     }
   }
+
+  function isLoading(){
+      if(classes.length && races.length){
+          return false
+      } else {
+          return true
+      }
+  }
+
+//   function getLoadingStatus() {
+//     if (classes.length && races.length) {
+//       setLoading(false);
+//     }
+//   }
+
   // useEffect to populate Class and Race information for ability scores and proficiency options
   useEffect(() => {
     getRaces();
     getClasses();
-  }, [])
+  }, []);
 
-  //   if (loading) {
-  //     return (
-  //       <Grid
-  //         textAlign="center"
-  //         style={{ height: "100vh" }}
-  //         verticalAlign="middle"
-  //       >
-  //         <Grid.Column style={{ width: "100vw" }}>
-  //           <Loader size="large" active>
-  //             Loading...
-  //           </Loader>
-  //         </Grid.Column>
-  //       </Grid>
-  //     );
-  // }
+  if(isLoading()) {
+    return (
+      <Grid
+        textAlign="center"
+        style={{ height: "100vh" }}
+        verticalAlign="middle"
+      >
+        <Grid.Column style={{ width: "80vw" }}>
+          <Loader size="large" active>
+            Loading...
+          </Loader>
+        </Grid.Column>
+      </Grid>
+    );
+  }
 
   return (
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
@@ -146,45 +140,34 @@ export default function AddCharForm({ user, handleLogout }) {
             <div>
               <label for="race">Select Your Character's Race</label>
               <select name="race" value={state.race} onChange={handleChange}>
-                {races.map(race => {
-                  return <option key={race.index} value={race._id}>{race.name}</option>
+                {races.map((race) => {
+                  return (
+                    <option key={race.index} value={race._id}>
+                      {race.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>
             <div>
               <label for="class">Select Your Character's Class</label>
               <select name="class" value={state.class} onChange={handleChange}>
-                {classes.map(classObj => {
-                  return <option key={classObj.index} value={classObj._id}>{classObj.name}</option>
+                {classes.map((classObj) => {
+                  return (
+                    <option key={classObj.index} value={classObj._id}>
+                      {classObj.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>
-            {/* <Form.Select
-              name="race"
-              className="form-control"
-              label="Select your Character's Race"
-              placeholder="Race"
-              options={races}
-              value={state.race}
-              onChange={handleChange}
-              required
-            />
-            <Form.Select
-              name="class"
-              className="form-control"
-              label="Select your Character's Class"
-              placeholder="Class"
-              options={classes}
-              value={state.class}
-              onChange={handleChange}
-              required
-            /> */}
             <Form.Field
               className="form-control"
               name="strength"
               label="Strength:"
               control="input"
               type="number"
+              min={3}
               max={18}
               value={state.strength}
               onChange={handleChange}
@@ -208,6 +191,7 @@ export default function AddCharForm({ user, handleLogout }) {
               label="Constitution:"
               control="input"
               type="number"
+              min={3}
               max={18}
               value={state.constitution}
               onChange={handleChange}
@@ -219,6 +203,7 @@ export default function AddCharForm({ user, handleLogout }) {
               label="Intelligence:"
               control="input"
               type="number"
+              min={3}
               max={18}
               value={state.intelligence}
               onChange={handleChange}
@@ -230,6 +215,7 @@ export default function AddCharForm({ user, handleLogout }) {
               label="Wisdom:"
               control="input"
               type="number"
+              min={3}
               max={18}
               value={state.wisdom}
               onChange={handleChange}
@@ -241,6 +227,7 @@ export default function AddCharForm({ user, handleLogout }) {
               label="Charisma:"
               control="input"
               type="number"
+              min={3}
               max={18}
               value={state.charisma}
               onChange={handleChange}

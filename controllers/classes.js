@@ -1,16 +1,16 @@
 const charClass = require('../models/class');
 
 module.exports ={
-    getClass,
-    index
+    getOne,
+    getAll
 };
 
-async function getClass(req, res){
+async function getOne(req, res){
     const json = await charClass.findOne({index: 'wizard'})
     res.json(json)
 }
 
-async function index(req, res) {
+async function getAll(req, res) {
     try {
       const classes = await charClass.find({});
       res.status(200).json({ classes });

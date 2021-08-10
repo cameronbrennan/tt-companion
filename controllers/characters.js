@@ -17,7 +17,7 @@ async function createDBCharacter(req, photoUrl) {
   const character = await Character.create({
     name: req.body.name,
     race: req.body.race,
-    class: "6110cea9da84dc7de4e69be8", //req.body.class.toLowerCase(),
+    class: req.body.class,
     strength: req.body.strength,
     dexterity: req.body.dexterity,
     constitution: req.body.constitution,

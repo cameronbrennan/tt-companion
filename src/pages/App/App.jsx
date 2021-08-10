@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import {PrivateRoute} from "../../components/Utils/PrivateRoute";
 import "./App.css";
 import userService from "../../utils/userService";
 import SignupPage from "../SignupPage/SignupPage";
 import LoginPage from "../LoginPage/LoginPage";
 import Home from "../Home/Home";
 import UserProfile from "../UserProfile/UserProfile";
-import AddCharForm from "../AddCharForm/AddCharForm";
+import CharacterCreate from "../CharacterCreate/CharacterCreate";
 import CharactersPage from "../CharactersPage/CharactersPage";
 import CharacterProfile from "../CharacterProfile/CharacterProfile";
 
@@ -40,7 +41,7 @@ function App() {
                 <Home user={user} handleLogout={handleLogout} />
               </Route>
               <Route path="/create">
-                <AddCharForm user={user} handleLogout={handleLogout} />
+                <CharacterCreate user={user} handleLogout={handleLogout} />
               </Route>
               <Route exact path="/characters">
                 <CharactersPage user={user} handleLogout={handleLogout} />
