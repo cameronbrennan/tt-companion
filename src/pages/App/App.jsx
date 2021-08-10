@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import {PrivateRoute} from "../../components/Utils/PrivateRoute";
+import { Route, Switch } from "react-router-dom";
+import PrivateRoute from "../../components/Utils/PrivateRoute";
 import "./App.css";
 import userService from "../../utils/userService";
 import SignupPage from "../SignupPage/SignupPage";
@@ -34,29 +34,21 @@ function App() {
         <Route exact path="/signup">
           <SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />
         </Route>
-        {userService.getUser() ? (
-          <>
-            <Switch>
-              <Route exact path="/">
-                <Home user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route path="/create">
-                <CharacterCreate user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route exact path="/characters">
-                <CharactersPage user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route path="/characters/:id">
-                <CharacterProfile user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route path="/:username">
-                <UserProfile user={user} handleLogout={handleLogout} />
-              </Route>
-            </Switch>
-          </>
-        ) : (
-          <Redirect to="/login" />
-        )}
+        <PrivateRoute exact path="/" user={user}>
+          <Home user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute path="/create" user={user}>
+          <CharacterCreate user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute exact path="/characters" user={user}>
+          <CharactersPage user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute path="/characters/:id" user={user}>
+          <CharacterProfile user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute path="/:username" user={user}>
+          <UserProfile user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
       </Switch>
     </div>
   );
