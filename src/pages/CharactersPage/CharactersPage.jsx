@@ -61,7 +61,7 @@ export default function CharactersPage({ user, handleLogout }) {
       </Grid.Row>
       <Card.Group itemsPerRow={3} stackable style={{ width: "90vw" }} centered>
         {characters.map((character) => {
-          return <CharCard character={character} />;
+          return <CharCard key={character._id} character={character} />;
         })}
       </Card.Group>
     </Grid>

@@ -88,7 +88,7 @@ export default function UserProfile({ user, handleLogout }) {
           >
             {characters.map((character) => {
               if (character.user._id === user._id) {
-                return <CharCard character={character} />;
+                return <CharCard key={character._id} character={character} />;
               }
             })}
           </Card.Group>
