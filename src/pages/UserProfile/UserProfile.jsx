@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Loader } from "semantic-ui-react";
+import { Grid, Loader, Card } from "semantic-ui-react";
 import userService from "../../utils/userService";
+import charService from "../../utils/charService";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import UserBio from "../../components/UserBio/UserBio";
+import CharCard from "../../components/CharacterDetail/CharCard";
 import { useParams } from "react-router-dom";
 
-export default function UserProfile({ user, handleLogout}) {
+export default function UserProfile({ user, handleLogout }) {
   const [profileUser, setProfileUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [characters, setCharacters] = useState([]);
   const [error, setError] = useState("");
 
   const { username } = useParams();
@@ -15,7 +18,6 @@ export default function UserProfile({ user, handleLogout}) {
   async function getProfile() {
     try {
       const data = await userService.getProfile(username);
-      console.log(data, " data");
       setLoading(() => false);
       setProfileUser(() => data.user);
     } catch (err) {
@@ -24,8 +26,19 @@ export default function UserProfile({ user, handleLogout}) {
     }
   }
 
+  async function getUserCharacters() {
+    try {
+      const data = await charService.getAll();
+      setCharacters([...data.characters]);
+      setLoading(false);
+    } catch (err) {
+      console.log(err, "Failed to load profile characters");
+    }
+  }
+
   useEffect(() => {
     getProfile();
+    getUserCharacters();
   }, []);
 
   if (error) {
@@ -65,6 +78,20 @@ export default function UserProfile({ user, handleLogout}) {
           <Grid.Column>
             <UserBio user={profileUser} />
           </Grid.Column>
+        </Grid.Row>
+        <Grid.Row centered>
+          <Card.Group
+            itemsPerRow={3}
+            stackable
+            style={{ width: "90vw" }}
+            centered
+          >
+            {characters.map((character) => {
+              if (character.user._id === user._id) {
+                return <CharCard character={character} />;
+              }
+            })}
+          </Card.Group>
         </Grid.Row>
       </Grid>
     </>

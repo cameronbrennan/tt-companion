@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PageHeader from "../../components/PageHeader/PageHeader";
+import CharCard from "../../components/CharacterDetail/CharCard";
 import * as charService from "../../utils/charService";
-import { Button, Grid, Loader } from "semantic-ui-react";
+import { Button, Card, Grid, Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default function CharactersPage({ user, handleLogout }) {
@@ -46,25 +47,23 @@ export default function CharactersPage({ user, handleLogout }) {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column style={{ width: "80vw" }} verticalAlign='middle'>
-        <Button.Group size="big" style={{width: '80vw'}}>
-            <Button>Create New Character</Button>
-            <Button.Or  />
-            <Button>View My Characters</Button>
+        <Grid.Column style={{ width: "80vw" }} verticalAlign="middle">
+          <Button.Group size="big" style={{ width: "80vw" }}>
+            <Button key="create">
+              <Link to="/create">Create New Character</Link>
+            </Button>
+            <Button.Or />
+            <Button key="profile">
+              <Link to={user.username}>View My Characters</Link>
+            </Button>
           </Button.Group>
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row>
-        <Grid.Column style={{ width: "80vw" }} verticalAlign='middle'>
-          {characters.map((character) => {
-            return (
-              <Link to={`/characters/${character._id}`} key={character._id}>
-                {character.name}
-              </Link>
-            );
-          })}
-        </Grid.Column>
-      </Grid.Row>
+      <Card.Group itemsPerRow={3} stackable style={{ width: "90vw" }} centered>
+        {characters.map((character) => {
+          return <CharCard character={character} />;
+        })}
+      </Card.Group>
     </Grid>
   );
 }

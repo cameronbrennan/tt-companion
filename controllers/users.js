@@ -12,11 +12,9 @@ module.exports = {
 };
 
 function signup(req, res) {
-  console.log(req.body, req.file)
   const filePath = `${uuidv4()}/${req.file.originalname}`
   const params = {Bucket: process.env.BUCKET_NAME, Key: filePath, Body: req.file.buffer};
   s3.upload(params, async function(err, data){
-    console.log(data, 'from aws')
     const user = new User({...req.body, photoUrl: data.Location});
     try {
       await user.save();
@@ -47,10 +45,8 @@ async function login(req, res) {
 }
 
 async function profile(req, res){
-  console.log(req.params);
   try{
     const user = await User.findOne({username: req.params.username});
-    console.log(user);
     if(!user){
       res.status(403).json({message: 'Please Login'});
     } else {

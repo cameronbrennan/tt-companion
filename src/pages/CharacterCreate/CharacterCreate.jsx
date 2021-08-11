@@ -3,18 +3,20 @@ import {
   Switch,
   Route,
   Link,
-  useParams,
   useRouteMatch,
   useHistory,
+  Redirect,
 } from "react-router-dom";
 import charService from "../../utils/charService";
 import raceService from "../../utils/raceService";
 import classService from "../../utils/classService";
 import { Button, Form, Grid, Segment, Loader } from "semantic-ui-react";
 import PageHeader from "../../components/PageHeader/PageHeader";
+import CharacterName from "../../components/CharacterCreateSteps/CharacterName/CharacterName";
 import RaceSelect from "../../components/CharacterCreateSteps/RaceSelect/RaceSelect";
 import ClassSelect from "../../components/CharacterCreateSteps/ClassSelect/ClassSelect";
 import AbilityScoresSelect from "../../components/CharacterCreateSteps/AbilityScores/AbilityScoresSelect";
+import CharacterBio from "../../components/CharacterCreateSteps/CharacterBio/CharacterBio";
 
 export default function CharacterCreate({ user, handleLogout }) {
   // state management
@@ -126,26 +128,34 @@ export default function CharacterCreate({ user, handleLogout }) {
           <PageHeader user={user} handleLogout={handleLogout} />
         </Grid.Column>
       </Grid.Row>
-      <div>
-        <h2>Create Character</h2>
-        <ul>
-          <li>
-            <Link to={`${url}/race`}>Select Character Race</Link>
-          </li>
-          <li>
-            <Link to={`${url}/class`}>Select Character Class</Link>
-          </li>
-          <li>
-            <Link to={`${url}/ability`}>Assign Character Ability Scores</Link>
-          </li>
-        </ul>
-      </div>
-
+      <Grid textAlign="center" verticalAlign="middle" style={{ width: "80vw" }}>
+        <Grid.Row>
+          <h2>Create Your Character</h2>
+          <ul id="NavList">
+            <li>
+              <Link to={`${url}/race`}>Select Character Race</Link>
+            </li>
+            <li>
+              <Link to={`${url}/class`}>Select Character Class</Link>
+            </li>
+            <li>
+              <Link to={`${url}/ability`}>Assign Character Ability Scores</Link>
+            </li>
+            <li>
+              <Link to={`${url}/bio`}>Character Bio</Link>
+            </li>
+          </ul>
+        </Grid.Row>
+        <Segment>
+          <CharacterName state={state} handleChange={handleChange} />
+        </Segment>
+      </Grid>
+      <Grid.Row />
       <Switch>
         <Route exact path={path}>
-          <h2>Create Character</h2>
+          <Redirect to={`${path}/race`} />
         </Route>
-        <Route exact path={`${path}/race`}>
+        <Route path={`${path}/race`}>
           <RaceSelect state={state} setState={setState} races={races} />
         </Route>
         <Route path={`${path}/class`}>
@@ -154,126 +164,14 @@ export default function CharacterCreate({ user, handleLogout }) {
         <Route path={`${path}/ability`}>
           <AbilityScoresSelect state={state} setState={setState} />
         </Route>
+        <Route path={`${path}/bio`}>
+          <CharacterBio state={state} handleChange={handleChange} />
+        </Route>
       </Switch>
-
+      <Grid.Row />
       <Grid.Column style={{ width: "80vw" }}>
         <Segment stacked>
           <Form autoComplete="off" onSubmit={handleSubmit}>
-            <Form.Field
-              label="Enter your Character's Name"
-              placeholder="Character Name"
-              className="form-control"
-              name="name"
-              control="input"
-              value={state.name}
-              onChange={handleChange}
-              required
-            />
-            <div>
-              <label htmlFor="race">Select Your Character's Race</label>
-              <select name="race" value={state.race} onChange={handleChange}>
-                {races.map((race) => {
-                  return (
-                    <option key={race.index} value={race._id}>
-                      {race.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="class">Select Your Character's Class</label>
-              <select name="class" value={state.class} onChange={handleChange}>
-                {classes.map((classObj) => {
-                  return (
-                    <option key={classObj.index} value={classObj._id}>
-                      {classObj.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <Form.Field
-              className="form-control"
-              name="strength"
-              label="Strength:"
-              control="input"
-              type="number"
-              min={3}
-              max={18}
-              value={state.strength}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              className="form-control"
-              name="dexterity"
-              label="Dexterity:"
-              control="input"
-              type="number"
-              min={3}
-              max={18}
-              value={state.dexterity}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              className="form-control"
-              name="constitution"
-              label="Constitution:"
-              control="input"
-              type="number"
-              min={3}
-              max={18}
-              value={state.constitution}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              className="form-control"
-              name="intelligence"
-              label="Intelligence:"
-              control="input"
-              type="number"
-              min={3}
-              max={18}
-              value={state.intelligence}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              className="form-control"
-              name="wisdom"
-              label="Wisdom:"
-              control="input"
-              type="number"
-              min={3}
-              max={18}
-              value={state.wisdom}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              className="form-control"
-              name="charisma"
-              label="Charisma:"
-              control="input"
-              type="number"
-              min={3}
-              max={18}
-              value={state.charisma}
-              onChange={handleChange}
-              required
-            />
-            <Form.Field
-              className="form-control"
-              name="charBio"
-              label="Character Bio:"
-              control="input"
-              value={state.charBio}
-              onChange={handleChange}
-              required
-            />
             <Form.Input
               className="form-control"
               type="file"

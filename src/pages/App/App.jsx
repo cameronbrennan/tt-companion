@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import PrivateRoute from "../../components/Utils/PrivateRoute";
 import "./App.css";
 import userService from "../../utils/userService";
@@ -12,17 +12,21 @@ import CharactersPage from "../CharactersPage/CharactersPage";
 import CharacterProfile from "../CharacterProfile/CharacterProfile";
 
 function App() {
-  const [user, setUser] = useState(userService.getUser()); // getUser decodes our JWT token, into a javascript object
-  // this object corresponds to the jwt payload which is defined in the server signup or login function that looks like
-  // this  const token = createJWT(user); // where user was the document we created from mongo
-
+  const [user, setUser] = useState(userService.getUser());
+  const history = useHistory();
   function handleSignUpOrLogin() {
-    setUser(userService.getUser()); // getting the user from localstorage decoding the jwt
+    setUser(userService.getUser());
   }
 
-  function handleLogout() {
-    userService.logout();
+  async function handleLogout() {
+    try{
+    await userService.logout();
     setUser({ user: null });
+    history.push('/login');
+    } catch(err){
+      console.log(err);
+      throw new Error(err);
+    }
   }
 
   return (

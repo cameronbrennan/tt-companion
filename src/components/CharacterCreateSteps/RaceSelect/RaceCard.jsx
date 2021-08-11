@@ -10,9 +10,10 @@ export default function RaceCard({ race, handleSelect, isSelected }) {
           onClick={() => {
             handleSelect(race._id);
           }}
-          toggle active={isSelected}
+          toggle
+          active={isSelected}
         >
-          <h2>{isSelected ? ("Selected") : ("Select")}</h2>
+          <h2>{isSelected ? "Selected" : "Select"}</h2>
         </Button>
       </Card.Content>
       <Card.Content extra textAlign={"left"}>

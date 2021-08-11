@@ -78,7 +78,6 @@ async function detail(req, res) {
       .populate("race")
       .populate("class")
       .exec();
-    console.log(character, "<- character");
     if (!character) {
       res.status(404).json({ message: "character not found" });
     } else {

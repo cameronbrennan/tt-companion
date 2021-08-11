@@ -21,7 +21,6 @@ export function getAll() {
 }
 
 export function getOne(id) {
-    console.log(id)
     return fetch(BASE_URL + id, {
         headers: {
             'Authorization': 'Bearer ' + tokenService.getToken()
