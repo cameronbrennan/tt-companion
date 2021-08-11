@@ -26,7 +26,7 @@ export default function CharacterCreate({ user, handleLogout }) {
   const [classes, setClasses] = useState([]);
   const [races, setRaces] = useState([]);
   const [state, setState] = useState({
-    name: "Test",
+    name: "",
     race: "",
     class: "",
     strength: "",
@@ -35,7 +35,7 @@ export default function CharacterCreate({ user, handleLogout }) {
     intelligence: "",
     wisdom: "",
     charisma: "",
-    charBio: "This is a test bio",
+    charBio: "",
     photoUrl: "",
   });
   const history = useHistory();

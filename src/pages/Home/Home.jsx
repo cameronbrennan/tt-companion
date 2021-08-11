@@ -20,7 +20,6 @@ export default function Home({ handleLogout, user }) {
             and favorites!
             <br />
             <br />
-            Sign Up or Login and start building your next adventurer!
           </p>
         </Grid.Column>
       </Grid.Row>
