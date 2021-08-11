@@ -36,7 +36,7 @@
 
 
 #### Application ERD
-<img src = "readme-images/TableTop Companion ERD.png" alt = "ERD" width = "640" height = "360">
+<img src = "public/readme-images/TableTop Companion ERD.png" alt = "ERD" width = "640" height = "360">
 
 #### Instructions
 1. When you reach landing page you will be redirected to login where you can signup for an account or login if you already have an account.
