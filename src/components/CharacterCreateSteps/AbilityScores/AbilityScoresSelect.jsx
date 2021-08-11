@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import charService from "../../utils/charService";
-import raceService from "../../utils/raceService";
-import classService from "../../utils/classService";
+// import { useHistory } from "react-router-dom";
+// import charService from "../../utils/charService";
+// import raceService from "../../utils/raceService";
+// import classService from "../../utils/classService";
 import { Button, Form, Grid, Segment, Loader } from "semantic-ui-react";
 
-export default function AbilityScoresCard({ handleSubmit, handleChange }) {
+export default function AbilityScoresSelect({ state, setState }) {
+  const fifthEditionScores = [15, 14, 13, 12, 10, 8]
+  const [scores, setScores] = useState([])
+
+  function handleChange(e){
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+      //setScores = scores-e.target.value
+      //.filter()
+    });
+  }
+
   return (
     <>
       <Grid.Column style={{ width: "80vw" }}>
         <Segment stacked>
-          <Form autoComplete="off" onSubmit={handleSubmit}></Form>
           <Form.Field
             className="form-control"
             name="strength"

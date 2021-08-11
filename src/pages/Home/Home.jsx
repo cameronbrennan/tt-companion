@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button, Grid } from "semantic-ui-react";
 import PageHeader from "../../components/PageHeader/PageHeader";
 

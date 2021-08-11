@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom";
 import charService from "../../utils/charService";
 import raceService from "../../utils/raceService";
 import classService from "../../utils/classService";
 import { Button, Form, Grid, Segment, Loader } from "semantic-ui-react";
 import PageHeader from "../../components/PageHeader/PageHeader";
+import RaceSelect from "../../components/CharacterCreateSteps/RaceSelect/RaceSelect";
+import ClassSelect from "../../components/CharacterCreateSteps/ClassSelect/ClassSelect";
+import AbilityScoresSelect from "../../components/CharacterCreateSteps/AbilityScores/AbilityScoresSelect";
 
 export default function CharacterCreate({ user, handleLogout }) {
   // state management
   const [error, setError] = useState("");
-  const [char, setChar] = useState([]);
   const [selectedFile, setSelectedFile] = useState("");
   const [loading, setLoading] = useState(true);
   const [classes, setClasses] = useState([]);
@@ -18,17 +27,17 @@ export default function CharacterCreate({ user, handleLogout }) {
     name: "Test",
     race: "",
     class: "",
-    strength: 12,
-    dexterity: 12,
-    constitution: 12,
-    intelligence: 12,
-    wisdom: 12,
-    charisma: 12,
+    strength: "",
+    dexterity: "",
+    constitution: "",
+    intelligence: "",
+    wisdom: "",
+    charisma: "",
     charBio: "This is a test bio",
     photoUrl: "",
   });
-
   const history = useHistory();
+  let { path, url } = useRouteMatch();
 
   // functions
   function handleFileInput(e) {
@@ -51,7 +60,6 @@ export default function CharacterCreate({ user, handleLogout }) {
     }
     try {
       const data = await charService.create(formData);
-      setChar(data);
       history.push("/");
     } catch (err) {
       console.log(err.message);
@@ -81,19 +89,13 @@ export default function CharacterCreate({ user, handleLogout }) {
     }
   }
 
-  function isLoading(){
-      if(classes.length && races.length){
-          return false
-      } else {
-          return true
-      }
+  function isLoading() {
+    if (classes.length && races.length) {
+      return false;
+    } else {
+      return true;
+    }
   }
-
-//   function getLoadingStatus() {
-//     if (classes.length && races.length) {
-//       setLoading(false);
-//     }
-//   }
 
   // useEffect to populate Class and Race information for ability scores and proficiency options
   useEffect(() => {
@@ -101,7 +103,7 @@ export default function CharacterCreate({ user, handleLogout }) {
     getClasses();
   }, []);
 
-  if(isLoading()) {
+  if (isLoading()) {
     return (
       <Grid
         textAlign="center"
@@ -124,6 +126,36 @@ export default function CharacterCreate({ user, handleLogout }) {
           <PageHeader user={user} handleLogout={handleLogout} />
         </Grid.Column>
       </Grid.Row>
+      <div>
+        <h2>Create Character</h2>
+        <ul>
+          <li>
+            <Link to={`${url}/race`}>Select Character Race</Link>
+          </li>
+          <li>
+            <Link to={`${url}/class`}>Select Character Class</Link>
+          </li>
+          <li>
+            <Link to={`${url}/ability`}>Assign Character Ability Scores</Link>
+          </li>
+        </ul>
+      </div>
+
+      <Switch>
+        <Route exact path={path}>
+          <h2>Create Character</h2>
+        </Route>
+        <Route exact path={`${path}/race`}>
+          <RaceSelect state={state} setState={setState} races={races} />
+        </Route>
+        <Route path={`${path}/class`}>
+          <ClassSelect state={state} setState={setState} classes={classes} />
+        </Route>
+        <Route path={`${path}/ability`}>
+          <AbilityScoresSelect state={state} setState={setState} />
+        </Route>
+      </Switch>
+
       <Grid.Column style={{ width: "80vw" }}>
         <Segment stacked>
           <Form autoComplete="off" onSubmit={handleSubmit}>
@@ -138,7 +170,7 @@ export default function CharacterCreate({ user, handleLogout }) {
               required
             />
             <div>
-              <label for="race">Select Your Character's Race</label>
+              <label htmlFor="race">Select Your Character's Race</label>
               <select name="race" value={state.race} onChange={handleChange}>
                 {races.map((race) => {
                   return (
@@ -150,7 +182,7 @@ export default function CharacterCreate({ user, handleLogout }) {
               </select>
             </div>
             <div>
-              <label for="class">Select Your Character's Class</label>
+              <label htmlFor="class">Select Your Character's Class</label>
               <select name="class" value={state.class} onChange={handleChange}>
                 {classes.map((classObj) => {
                   return (

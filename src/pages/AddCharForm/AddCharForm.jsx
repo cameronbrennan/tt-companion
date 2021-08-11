@@ -144,7 +144,7 @@ export default function AddCharForm({ user, handleLogout }) {
               required
             />
             <div>
-              <label for="race">Select Your Character's Race</label>
+              <label htmlFor="race">Select Your Character's Race</label>
               <select name="race" value={state.race} onChange={handleChange}>
                 {races.map(race => {
                   return <option key={race.index} value={race._id}>{race.name}</option>
@@ -152,7 +152,7 @@ export default function AddCharForm({ user, handleLogout }) {
               </select>
             </div>
             <div>
-              <label for="class">Select Your Character's Class</label>
+              <label htmlFor="class">Select Your Character's Class</label>
               <select name="class" value={state.class} onChange={handleChange}>
                 {classes.map(classObj => {
                   return <option key={classObj.index} value={classObj._id}>{classObj.name}</option>
