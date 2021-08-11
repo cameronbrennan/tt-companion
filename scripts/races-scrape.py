@@ -1,9 +1,11 @@
 # Python API Scraper to populate Races in the DB
 
 from logging import error
+from dotenv import load_dotenv, find_dotenv
 import urllib3
 import json
 http = urllib3.PoolManager()
+load_dotenv(find_dotenv())
 
 API_URL = "https://www.dnd5eapi.co"
 
@@ -13,7 +15,7 @@ def get_database():
 
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
     # CONNECTION_STRING = "mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/myFirstDatabase"
-    CONNECTION_STRING = "mongodb://localhost:27017/ttcompanion"
+    CONNECTION_STRING = find_dotenv("DATABASE_URL")
 
     # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
     from pymongo import MongoClient
