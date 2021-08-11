@@ -6,7 +6,6 @@ import CharacterDetail from "../../components/CharacterDetail/CharacterDetail";
 import { useParams } from "react-router-dom";
 
 export default function CharacterProfile({ user, handleLogout }) {
-  console.log("this is hitting the character profile page");
   const [detailChar, setDetailChar] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -18,7 +17,6 @@ export default function CharacterProfile({ user, handleLogout }) {
       const data = await charService.getOne(id);
       setDetailChar(data.character);
       setLoading(false);
-      console.log("This is the data.character ->", data.character);
     } catch (err) {
       console.log(err);
       setError("Profile does not Exist");
@@ -45,9 +43,9 @@ export default function CharacterProfile({ user, handleLogout }) {
         style={{ height: "100vh" }}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: 450 }}>
+        <Grid.Column style={{ width: "80vw" }}>
           <Loader size="large" active>
-            Loading
+            Loading...
           </Loader>
         </Grid.Column>
       </Grid>

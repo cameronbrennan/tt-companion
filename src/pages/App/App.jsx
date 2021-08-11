@@ -1,27 +1,32 @@
 import React, { useState } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
+import PrivateRoute from "../../components/Utils/PrivateRoute";
 import "./App.css";
 import userService from "../../utils/userService";
 import SignupPage from "../SignupPage/SignupPage";
 import LoginPage from "../LoginPage/LoginPage";
 import Home from "../Home/Home";
 import UserProfile from "../UserProfile/UserProfile";
-import AddCharForm from "../AddCharForm/AddCharForm";
+import CharacterCreate from "../CharacterCreate/CharacterCreate";
 import CharactersPage from "../CharactersPage/CharactersPage";
 import CharacterProfile from "../CharacterProfile/CharacterProfile";
 
 function App() {
-  const [user, setUser] = useState(userService.getUser()); // getUser decodes our JWT token, into a javascript object
-  // this object corresponds to the jwt payload which is defined in the server signup or login function that looks like
-  // this  const token = createJWT(user); // where user was the document we created from mongo
-
+  const [user, setUser] = useState(userService.getUser());
+  const history = useHistory();
   function handleSignUpOrLogin() {
-    setUser(userService.getUser()); // getting the user from localstorage decoding the jwt
+    setUser(userService.getUser());
   }
 
-  function handleLogout() {
-    userService.logout();
+  async function handleLogout() {
+    try{
+    await userService.logout();
     setUser({ user: null });
+    history.push('/login');
+    } catch(err){
+      console.log(err);
+      throw new Error(err);
+    }
   }
 
   return (
@@ -33,29 +38,21 @@ function App() {
         <Route exact path="/signup">
           <SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />
         </Route>
-        {userService.getUser() ? (
-          <>
-            <Switch>
-              <Route exact path="/">
-                <Home user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route path="/create">
-                <AddCharForm user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route exact path="/characters">
-                <CharactersPage user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route path="/characters/:id">
-                <CharacterProfile user={user} handleLogout={handleLogout} />
-              </Route>
-              <Route path="/:username">
-                <UserProfile user={user} handleLogout={handleLogout} />
-              </Route>
-            </Switch>
-          </>
-        ) : (
-          <Redirect to="/login" />
-        )}
+        <PrivateRoute exact path="/" user={user}>
+          <Home user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute path="/create" user={user}>
+          <CharacterCreate user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute exact path="/characters" user={user}>
+          <CharactersPage user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute path="/characters/:id" user={user}>
+          <CharacterProfile user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
+        <PrivateRoute path="/:username" user={user}>
+          <UserProfile user={user} handleLogout={handleLogout} />
+        </PrivateRoute>
       </Switch>
     </div>
   );

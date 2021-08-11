@@ -1,3 +1,5 @@
+# Python API Scraper to populate Races in the DB
+
 from logging import error
 import urllib3
 import json

@@ -16,8 +16,8 @@ module.exports = {
 async function createDBCharacter(req, photoUrl) {
   const character = await Character.create({
     name: req.body.name,
-    race: "6110ceae73789937de0c5ff8", //req.body.race.toLowerCase(),
-    class: "6110cea9da84dc7de4e69be8", //req.body.class.toLowerCase(),
+    race: req.body.race,
+    class: req.body.class,
     strength: req.body.strength,
     dexterity: req.body.dexterity,
     constitution: req.body.constitution,
@@ -78,7 +78,6 @@ async function detail(req, res) {
       .populate("race")
       .populate("class")
       .exec();
-    console.log(character, "<- character");
     if (!character) {
       res.status(404).json({ message: "character not found" });
     } else {

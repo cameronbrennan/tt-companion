@@ -29,7 +29,9 @@ export default function UserBio({ user }) {
             <h3>{user.email}</h3>
           </Segment>
           <Segment>
-            <span><h3>Bio: {user.bio}</h3></span>
+            <span>
+              <h3>Bio: {user.bio}</h3>
+            </span>
           </Segment>
         </Grid.Column>
       </Grid.Row>

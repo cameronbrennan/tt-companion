@@ -1,16 +1,6 @@
 import tokenService from './tokenService';
 
-const BASE_URL = '/api/characters/';
-
-export function create(character){
-    return fetch(BASE_URL, {
-        method: 'POST',
-        body: character,
-        headers: {
-            'Authorization': 'Bearer ' + tokenService.getToken()
-        }
-    }).then(res => res.json());
-}
+const BASE_URL = '/api/classes/';
 
 export function getAll() {
     return fetch(BASE_URL, {
@@ -32,7 +22,6 @@ export function getOne(id) {
 }
 
 export default {
-    create,
     getAll,
     getOne
 }
